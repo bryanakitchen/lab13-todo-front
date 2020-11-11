@@ -9,3 +9,4 @@ export default class Login extends React.Component {
         )
     }
 }
+// finish sign up FIRST. 
