@@ -32,7 +32,8 @@ export default class Todos extends React.Component {
                     loading 
                     ? 'Loading... Please wait.'
                     : todos.map(todo => <div> 
-                        Chore: {todo.chore}; Status: {todo.completed}
+                        <p className="todo-item">Chore: {todo.chore}<br />  
+                        Status: {todo.completed ? 'Completed' : 'Not Completed'}</p>
                     </div>)
                 }
 
