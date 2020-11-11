@@ -26,7 +26,7 @@ export default class App extends Component {
         <Router>
           <ul>
             { this.state.token && <div>Welcome, User!</div> }
-            { this.state.token && <Link to="/todos"><div>ToDos</div></Link> }
+            { this.state.token && <Link to="/todos"><div>To Do List</div></Link> }
             <Link to="/login"><div>Log In</div></Link>
             <Link to="/signup"><div>Sign Up</div></Link>
             <button onClick={() => this.handleTokenChange('')}>Logout</button>

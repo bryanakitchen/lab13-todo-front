@@ -23,6 +23,28 @@ export default class Todos extends React.Component {
         await this.setState({ todos: response.body, loading: false })
     }
 
+    handleSubmit = async (e) => {
+        const { token } = this.props;
+        const { choreName } = this.state;
+        
+        e.preventDefault();
+
+        this.setState({loading: true});
+
+        const newTodo = {
+            chore: choreName,
+        }
+        
+        await request
+            .post('https://lab12-todo.herokuapp.com/api/todos')
+            .send(newTodo)
+            .set('Authorization', token);
+
+        this.setState({loading: false});
+
+        await this.fetchTodos();
+    }
+
     handleCompletedClick = async (id) => {
         const { token } = this.props;
 
@@ -37,12 +59,21 @@ export default class Todos extends React.Component {
         const { loading, todos } = this.state;
         return (
             <div>
-                <h3>Here is your ToDo List</h3>
+                <h3>Here is your To Do List</h3>
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Add Item 
+                        <input 
+                        onChange={(e => this.setState({ choreName: e.target.value }))}
+                        type="text" />
+                    </label>
+                    <button>Add</button>
+                </form>
                 {
                     loading 
                     ? 'Loading... Please wait.'
                     : todos.map(todo => <div key={`${todo.chore}${todo.id}${Math.random()}`}> 
-                        <p className="todo-item">Chore: {todo.chore}<br />  
+                        <p className="todo-item">To Do: {todo.chore}<br />  
                         Status: {todo.completed ? 'Completed' : <button onClick={() => this.handleCompletedClick(todo.id)}>Mark Complete</button>}</p>
                     </div>)
                 }
