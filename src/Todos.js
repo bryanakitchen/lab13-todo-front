@@ -23,6 +23,16 @@ export default class Todos extends React.Component {
         await this.setState({ todos: response.body, loading: false })
     }
 
+    handleCompletedClick = async (id) => {
+        const { token } = this.props;
+
+        await request
+            .put(`https://lab12-todo.herokuapp.com/api/todos/${id}`)
+            .set('Authorization', token);
+
+        await this.fetchTodos();
+    }
+
     render() {
         const { loading, todos } = this.state;
         return (
@@ -31,9 +41,9 @@ export default class Todos extends React.Component {
                 {
                     loading 
                     ? 'Loading... Please wait.'
-                    : todos.map(todo => <div> 
+                    : todos.map(todo => <div key={`${todo.chore}${todo.id}${Math.random()}`}> 
                         <p className="todo-item">Chore: {todo.chore}<br />  
-                        Status: {todo.completed ? 'Completed' : 'Not Completed'}</p>
+                        Status: {todo.completed ? 'Completed' : <button onClick={() => this.handleCompletedClick(todo.id)}>Mark Complete</button>}</p>
                     </div>)
                 }
 
