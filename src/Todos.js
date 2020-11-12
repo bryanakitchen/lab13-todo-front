@@ -41,8 +41,10 @@ export default class Todos extends React.Component {
             .set('Authorization', token);
 
         this.setState({loading: false});
+        await this.setState({ choreName: '' });
 
         await this.fetchTodos();
+
     }
 
     handleCompletedClick = async (id) => {
@@ -56,7 +58,7 @@ export default class Todos extends React.Component {
     }
 
     render() {
-        const { loading, todos } = this.state;
+        const { loading, todos, choreName } = this.state;
         return (
             <div>
                 <h3>Here is your To Do List</h3>
@@ -64,6 +66,7 @@ export default class Todos extends React.Component {
                     <label>
                         Add Item 
                         <input 
+                        value={choreName}
                         onChange={(e => this.setState({ choreName: e.target.value }))}
                         type="text" />
                     </label>

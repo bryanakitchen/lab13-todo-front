@@ -6,6 +6,7 @@ export default class Login extends React.Component {
         email: '',
         password: '',
         loading: false,
+        err: null,
     }
     
     handleSubmit = async (e) => {
@@ -13,15 +14,22 @@ export default class Login extends React.Component {
 
         this.setState({loading: true});
 
-        const user = await request
+        try {
+
+            const user = await request
             .post('https://lab12-todo.herokuapp.com/auth/signin')
             .send(this.state);
 
-        this.setState({loading: false});
+            this.setState({loading: false, err: null });
+    
+            this.props.handleTokenChange(user.body.token);
+    
+            this.props.history.push('/todos')
+        } catch(err) {
+            this.setState({err: 'Email or Password Invalid'});
+            // throw err;
+        };
 
-        this.props.handleTokenChange(user.body.token);
-
-        this.props.history.push('/todos')
     }
     
     render() {
@@ -30,6 +38,7 @@ export default class Login extends React.Component {
                 <h3>This is the Login page</h3>
                 <form onSubmit={this.handleSubmit}>
                     <label>
+                        {this.state.err && <div style={{ color: 'red'}}>{this.state.err}</div>}
                         Email
                         <input 
                         onChange={(e => this.setState({ email: e.target.value }))}
