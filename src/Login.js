@@ -29,16 +29,17 @@ export default class Login extends React.Component {
             this.setState({err: 'Email or Password Invalid'});
             // throw err;
         };
-
     }
     
     render() {
+        const { err } = this.state;
+
         return (
             <div>
                 <h3>This is the Login page</h3>
                 <form onSubmit={this.handleSubmit}>
                     <label>
-                        {this.state.err && <div style={{ color: 'red'}}>{this.state.err}</div>}
+                        {err && <div style={{ color: 'red'}}>{err}</div>}
                         Email
                         <input 
                         onChange={(e => this.setState({ email: e.target.value }))}
