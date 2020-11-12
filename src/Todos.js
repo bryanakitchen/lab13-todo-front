@@ -72,6 +72,7 @@ export default class Todos extends React.Component {
                     </label>
                     <button>Add</button>
                 </form>
+                <div className="group">
                 {
                     loading 
                     ? 'Loading... Please wait.'
@@ -80,7 +81,7 @@ export default class Todos extends React.Component {
                         Status: {todo.completed ? 'Completed' : <button onClick={() => this.handleCompletedClick(todo.id)}>Mark Complete</button>}</p>
                     </div>)
                 }
-
+                </div>
             </div>
         )
     }
