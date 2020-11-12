@@ -1,11 +1,15 @@
-import React from 'react';
+import React from 'react'
+import { Route, Redirect } from 'react-router-dom'
 
-export default class PrivateRoute extends React.Component {
-    render() {
-        return (
-            <div>
-                Private Route...
-            </div>
-        )
-    }
+const PrivateRoute = ({ render: Component, ...rest }) => {
+  return (
+    // Show the component only when the user is logged in
+    // Otherwise, redirect the user to /signin page
+    <Route
+      {...rest}
+      render={props => (rest.token ? <Component {...props} {...rest} /> : <Redirect to="/login" />)}
+    />
+  )
 }
+
+export default PrivateRoute
